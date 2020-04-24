@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test </title>
+<link rel="stylesheet" href="../css/w3.css" />
+<script type="text/javascript" src="../css/jquery-3.5.0.min.js"></script>
+<style>
+	form label {
+		font-size: 10pt;
+		color: gray;
+	}
+	.pright {
+		padding-right: 0px;
+	}
+	.btn1 {
+		height: 28px;
+	}
+	label {
+		min-width: 140px;
+	}
+	
+	.imgwin {
+		display: inline-block;
+		width: 120px;
+		height: auto;
+		overflow: hidden;
+		margin-left: 0px;
+		margin-top: 10px;
+		margin-right: 17px;
+	}
+	.imgwin1 {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		overflow: hidden;
+		margin-left: 50px;
+		margin-top: 10px;
+	
+	}
+	
+	.imgwin2 {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		overflow: hidden;
+		margin-left: 118px;
+		margin-top: 10px;
+	
+	}
+	
+	.imgwin3 {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		overflow: hidden;
+		margin-left: 117px;
+		margin-top: 10px;
+	
+	}
+	
+	.mar {
+		margin-right: 30px;
+	}
+	
+	.dnone {
+		display: none;
+	}
+	
+	.pro {
+	padding-bottom: 10px;
+	border-bottom: 2px solid gray;
+	border-top: 2px solid gray;
+}
+	.mtn {
+		display: inline-block;
+		margin-left: 465px;
+		margin-top: 10px;
+		width: 20px;
+		height: 20px;
+		background-color: red;
+		
+	}
+</style>
+<script type="text/javascript">
+	$(document).ready(function(){
+		/*
+			비동기 통신
+				==> 웹서비스에서 원칙은
+					클라이언트가 요청을 하면
+					서버는 클라이언트가 요청한 문서를 응답(전송)해준다.
+					그리고 그 직후
+					서버는 클라이언트와의 연결을 끊는다.
+					따라서 이런 통신방식을
+					단절형 통신이라 이야기한다.
+					
+					그리고
+					서버가 전달된 문서는
+					원칙은 클라이언트가 전송받은 문서와 동일해야 된다.
+					이런 경우를 동기형이라 이야기 한다.
+					
+					반대로
+					서버가 전달해준 문서와
+					클라이언트가 받은 문서를 일부분만 교체한 경우
+					비동기라 이야기한다.
+					
+					결론적으로
+					비동기처리란
+					서버가 보내준 문서의 일부분만 서버와 통신을 해서 새로 받아서 교체하는
+					처리를 비동기 처리라 한다.
+					영어로 Ajax 라 부른다.
+					
+					그런데
+					이 비동기 처리는 jQuery에서 함수로 정의가 되어있고
+						형식 ]
+					
+							$.ajax({
+								url: '주소',					==> 요청주소
+								type: 'get | post',			==> 데이터 전송방식
+								dataType: 'text | html | xml | josn',	==> 데이터 전송 타입
+								data: {						==> 전송될 데이터(파라미터들)
+									넘겨줄 데이터 나열
+									'변수이름': '데이터',
+									'변수이름': '데이터',
+									....
+								},
+								success: function(data){	==> 통신에 성공할 경우 실행할 함수
+									성공시 처리내용
+								},
+								error: function(){			==> 통신에 실패할 경우 실행할 함수
+									실패시 처리내용
+								}
+							});
+		*/
+		
+		$('#idck').click(function (){
+			// 할일
+			// 1. 입력태그에 입력된 아이디를 가져오고
+			var sid = $('#id').val();
+			if(sid){
+				$.ajax({
+					url: 'http://localhost/idCheck.ck',
+					type: 'GET',
+					dataType: 'json',
+					data: {
+						'id': sid
+					},
+					success: function(data){
+						var result = data.result;
+						if(result == 'ok'){
+							// 아이디를 사용가능한 경우
+							$('#idmsg').text('*** 사용 가능한 아이디 입니다. ***');
+							$('#idmsg').css('color','blue');
+							$('#idmsg').css('display','');
+							
+						} else {
+							// 아이디가 사용불가능한 경우
+							$('#idmsg').text('### 사용할 수 없는 아이디 입니다. ###');
+							$('#idmsg').css('color','red');
+							$('#idmsg').css('display','');
+							$('#id').val('');
+							$('#id').focus();
+						}
+					},
+					error: function(){
+						alert('### 통신 실패 ###');
+					}
+				});
+			} else {
+				$('#id').focus();
+				return;
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<div class="w3-col l3 m3"><p></p></div>
+	<div class="w3-col l6 m7 s12">
+		<form class="w3-col m8" method="post" action="" name="frm" id="frm">
+			<div class="pro w3-center">
+				<h4>프로필입력</h4>
+			</div>
+			<div class="w3-col w3-margin-top ">
+				<div class="w3-row">
+				<label class="w3-col m3 w3-right-align w3-padding" for="pw">프로필 사진 : </label>
+					<div class="w3-col m8 w3-padding" id="imgfr">
+						<input class="w3-col" type="file" id="file" name="file">
+						<img class="w3-col imgwin dnone" id="img1" src="../../img/noimage.jpg" alt="Image">
+					</div>
+					
+				</div>
+				<div class="w3-row">
+					<label class="w3-col m3 w3-right-align w3-padding" for="id"> 아이디 : </label>
+					<div class="w3-col m8 w3-padding">
+						<div class="w3-col m9 pright">
+							<input class="w3-col w3-margin-right: 30px;" type="text" id="id" name="id">
+						</div>
+						<div class="w3-col m3 w3-red w3-hover-pink w3-button w3-small w3-card btn1" id="idck">중복 확인</div>
+						<p class="w3-col w3-center" id="idmsg" style="display: none;"></p>
+					</div>
+				</div>
+				<div class="w3-row">
+					<label class="w3-col m3 w3-right-align w3-padding" for="pw">비 밀 번 호 : </label>
+					<div class="w3-col m8 w3-padding">
+						<input class="w3-col" type="password" id="pw" name="pw">
+					</div>
+				</div>
+				<div class="w3-row">
+					<label class="w3-col m3 w3-right-align w3-padding" for="repw">비밀번호확인 : </label>
+					<div class="w3-col m8 w3-padding">
+						<input class="w3-col" type="password" id="repw" name="reipw">
+					</div>
+				</div>
+				<div class="w3-row">
+					<label class="w3-col l3 m8 w3-right-align w3-padding" for="name"> 이 름 :</label>
+					<div class="w3-col l8 m12 w3-padding">
+						<input class="w3-col" type="text" id="name" name="name">
+					</div>
+				</div>
+				<div class="w3-row">
+					<label class="w3-col m3 w3-right-align w3-padding" for="pw"> 이메일 : </label>
+					<div class="w3-col m8 w3-padding">
+						<input class="w3-col" type="text" id="pw" name="ipw">
+					</div>
+				</div>
+				<div class="w3-row">
+					<label class="w3-col m3 w3-right-align w3-padding" for="pw">전 화 번 호 : </label>
+					<div class="w3-col m8 w3-padding">
+						<input class="w3-col" type="text" id="pw" name="ipw">
+					</div>
+				</div>
+				<div class="w3-row">
+					<label class="w3-col m3 w3-right-align w3-padding" for="gen">성 별 : </label>
+					<div class="w3-col m8 w3-padding">
+						<div class="w3-half">
+							<input type="radio" id="mgen" name="gen"><label for="mgen"> 남 자</label></span>
+						</div>
+						<div class="w3-half">
+							<input type="radio" id="wgen" name="gen"><label for="wgen"> 여 자</label>
+						</div>
+					</div>
+				</div>
+				<div class="w3-row" id="avtfr">
+					<label class="w3-col m3 w3-right-align w3-padding" for="avt">아바타 선택 : </label>
+					<div class="w3-col m9 w3-padding">
+						<div class="w3-row" id="mavt">
+							<div class="w3-col">
+						<label for="m1"><img class="w3-col imgwin dnone" id="img2" src="../../img/img_avatar1.png" alt="Image"></label>
+						<label for="m2"><img class="w3-col imgwin dnone" id="img3" src="../../img/img_avatar2.png" alt="Image"></label>
+						<label for="m3"><img class="w3-col imgwin dnone" id="img4" src="../../img/img_avatar3.png" alt="Image"></label>
+						<label for="m1"><img class="w3-col imgwin dnone" id="img5" src="../../img/img_avatar4.png" alt="Image"></label>
+						<label for="m2"><img class="w3-col imgwin dnone" id="img6" src="../../img/img_avatar5.png" alt="Image"></label>
+						<label for="m3"><img class="w3-col imgwin dnone" id="img7" src="../../img/img_avatar6.png" alt="Image"></label>
+							</div>
+							
+						</div>
+								<input class="w3-col imgwin1 dnone" type="radio" id="m1" name="m1">
+								<input class="w3-col imgwin2 dnone" type="radio" id="m2" name="m1">
+								<input class="w3-col imgwin3 dnone" type="radio" id="m3" name="m1">
+					</div>
+				</div>
+				<div class="w3-row">
+					<label class="w3-col m3 w3-right-align w3-padding" for="birth">생 년 월 일 : </label>
+					<div class="w3-col m8 w3-padding">
+						<!-- <input class="w3-col" type="date" id="birth" name="birth"> -->
+						<select class="w3-col m4">
+					<option value="#"> 년
+					<option value="2020">2020
+					<option value="2019">2019
+					<option value="2018">2018
+					<option value="2017">2017
+					<option value="2016">2016
+					<option value="2016">2015
+					<option value="2016">2014
+					<option value="2016">2013
+					<option value="2016">2012
+					<option value="2016">2011
+					<option value="2016">2010
+					<option value="2016">2009
+					<option value="2016">2008
+					<option value="2016">2007
+					<option value="2016">2006
+					<option value="2016">2005
+					<option value="2016">2004
+					<option value="2016">2003
+					<option value="2016">2002
+					<option value="2016">2001
+					<option value="2016">2000
+					<option value="2016">1999
+					<option value="2016">1998
+					<option value="2016">1997
+					<option value="2016">1996
+					<option value="2016">1995
+					<option value="2016">1994
+					<option value="2016">1993
+					<option value="2016">1992
+					<option value="2016">1991
+					<option value="2016">1990
+				</select>
+				<select class="w3-col m4">
+					<option value="#"> 월
+					<option value="1"> 1
+					<option value="2"> 2
+					<option value="3"> 3
+					<option value="4"> 4
+					<option value="5"> 5
+					<option value="6"> 6
+					<option value="7"> 7
+					<option value="8"> 8
+					<option value="9"> 9
+					<option value="10"> 10
+					<option value="11"> 11
+					<option value="12"> 12
+				</select>
+				<select class="w3-col m4">
+					<option value="일"> 일
+					<option value="1"> 1
+					<option value="2"> 2
+					<option value="3"> 3
+					<option value="4"> 4
+					<option value="5"> 5
+					<option value="6"> 6
+					<option value="7"> 7
+					<option value="8"> 8
+					<option value="9"> 9
+					<option value="10">10
+					<option value="11">11
+					<option value="12">12
+					<option value="13">13
+					<option value="14">14
+					<option value="15">15
+					<option value="16">16
+					<option value="17">17
+					<option value="18">18
+					<option value="19">19
+					<option value="20">20
+					<option value="21">21
+					<option value="22">22
+					<option value="23">23
+					<option value="24">24
+					<option value="25">25
+					<option value="26">26
+					<option value="27">27
+					<option value="28">28
+					<option value="29">29
+					<option value="30">30
+					<option value="31">31
+				</select>
+					</div>
+				</div>
+			</div>
+			<div class="w3-col w3-center">
+			<div class="w3-col m2 mtn button" >회원 가입</div>
+			</div>
+		</form>
+	</div>
+</body>
+<script type="text/javascript">
+document.getElementById('file').onchange = function(evt){
+	var val = this.value;
+	
+	var val1= val.slice(val.indexOf(".")).toLowerCase();
+	
+	if(val1 !=".jpg" && val1 !=".jpeg" && val1 !=".png" && val1 !=".gif"){
+		alert("썸네일 이미지는 파일( jpg,jpeg,png,gif)만 등록가능합니다");
+		
+		return;
+	}
+	
+	var vfile = URL.createObjectURL(evt.target.files[0]);
+	document.getElementById('img1').setAttribute('src', vfile);
+	document.getElementById('img1').classList.remove('dnone');
+}
+
+
+document.getElementById('mgen').onclick = function(){
+	if(mgen.checked){
+		document.getElementById('img2').classList.remove('dnone');
+		document.getElementById('img3').classList.remove('dnone');
+		document.getElementById('img4').classList.remove('dnone');
+		document.getElementById('img5').classList.add('dnone');
+		document.getElementById('img6').classList.add('dnone');
+		document.getElementById('img7').classList.add('dnone');
+		
+		document.getElementById('m1').classList.remove('dnone');
+		document.getElementById('m2').classList.remove('dnone');
+		document.getElementById('m3').classList.remove('dnone');
+		} 
+		
+	}		
+		
+
+	document.getElementById('wgen').onclick = function(){
+		if(wgen.checked){
+	document.getElementById('img2').classList.add('dnone');
+	document.getElementById('img3').classList.add('dnone');
+	document.getElementById('img4').classList.add('dnone');
+	document.getElementById('img5').classList.remove('dnone');
+	document.getElementById('img6').classList.remove('dnone');
+	document.getElementById('img7').classList.remove('dnone');
+	
+	document.getElementById('m1').classList.remove('dnone');
+	document.getElementById('m2').classList.remove('dnone');
+	document.getElementById('m3').classList.remove('dnone');
+			
+		}
+	}
+
+</script>
+</html>

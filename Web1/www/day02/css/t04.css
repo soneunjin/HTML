@@ -1,0 +1,43 @@
+body {
+	text-align: center;
+}
+.iblock {
+	display: inline-block;
+}
+.div100 {
+	display: inline-block; 
+	width: 100px; 
+	height: 100px;
+}
+.round50 {
+	border-radius: 50%;
+}
+.sh10 {
+	box-shadow: 0 0 10px slateblue;
+}
+.dContainer {
+	width: 110px; 
+	height: 110px; 
+	padding: 5px; 
+	border: 1px solid orange;
+}
+#d1 {
+	background-color: orange;
+	border: 2px solid coral;
+}
+#bgpink {
+	background-color: pink;
+}
+#w100auto {
+	width: 100px;
+	height: auto;
+}
+#imgfr {
+	overflow: hidden;
+	margin-top: 5px;
+}
+#img1 {
+	width: auto; 
+	height: 100px; 
+	margin-left: -50px;
+}

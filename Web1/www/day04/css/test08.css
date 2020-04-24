@@ -1,0 +1,38 @@
+body {
+	text-align: center;
+}
+.fr {
+	display: inline-block;
+	width: 750px;
+	font-size: 0pt;
+}
+.th > span {
+	border: 1px solid #444444;
+}
+span {
+	display: inline-block;
+	width: 140px;
+	text-align: center;
+	font-size: 11pt;
+}
+.th > span {
+	font-weight: bold;
+}
+div > span:first-child, div > span:first-child + span {
+	width: 100px;
+}
+div > span:nth-child(4) {
+	width: 190px;
+}
+.th > span {
+	background-color: gray;
+	color: white;
+}
+.tr:nth-child(2n+1) > span {
+	background-color: lightgray;
+}
+
+
+
+
+

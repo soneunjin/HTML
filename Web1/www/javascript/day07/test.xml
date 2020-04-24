@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<people>
+	<person>
+		<name>손은진</name>
+		<age>29</age>
+		<id>eunjin</id>
+		<tel>010-5704-7478</tel>
+		<mail>sej0267@naver.com</mail>
+	</person>
+	<person>
+		<name>서동혁</name>
+		<age>27</age>
+		<id>seo</id>
+		<tel>010-9823-5579</tel>
+		<mail>seo@increpas.com</mail>
+	</person>
+</people>
